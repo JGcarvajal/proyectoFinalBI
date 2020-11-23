@@ -1,4 +1,4 @@
-#PROYECTO  FINNAL BUSINESS INTELIGENCIA BI
+# PROYECTO  FINNAL BUSINESS INTELIGENCIA BI
 Este es el repositorio para el proyecto final de la asignatura de Inteligencia de Negoios (BI)
 
 PROYECTO FINAL BUSINESS INTELLIGENCE BI
