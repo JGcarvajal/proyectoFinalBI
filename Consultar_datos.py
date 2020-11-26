@@ -1,28 +1,53 @@
 import requests
 import json
+#proyecto final de BUSINESS INTELLIGENCE BI
+#presetado por Juan Gabriel Carvajal - Jhon Alexander Cruz
+#Ingenieria de Sistemas y Computacion
+#Para el desarrollos del proyecto se consultara
+#la aplicacion Alpha Vantage
+
+#La apikey nos permite acceder ala aplicacion.
+#para obterner la informacion necesaria para el proyecto.
+
 apiKey = "55A5SUC3FX5Y4F6N"
+
+#por medio de la aplicacion Alpha Vantage se puede consutar
+#la informacion de varias empresas en este caso se consultaran
+#estas 4 empresa IBM, EPM, ECOPETROL "EC", BANCOLOMBIA "CIB"
+
 #empresas=["IBM","EPM","EC","CIB"]
 empresas=["IBM","EC"]
+
+#Al consultar en la aplicancion el endpoint Query se
+#extrae la informacion necesaria y se adiciona a los
+#documentos.
 
 detalleEmpresas=[]
 gananciasAnuales=[]
 banlancesAnuales=[]
 historicos=[]
+cambio=[]
 
-#Historico de transacciones ultimo mes
+#URL para obtener la informacion de la plicacion
+#y porder manipular los datos son las siguientes.
+
+#url para obtener Historico de transacciones ultimo mes
 #https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY_EXTENDED&symbol=IBM&interval=15min&slice=year1month1&apikey=demo
 
-#balances anuales y trimestrales
+
+#url para obtener balances anuales y trimestrales
 #https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&outputsize=full&apikey=55A5SUC3FX5Y4F6N&datatype=json
 
-#Ganancias por año y trimestral
+#url para obtener Ganancias por año y trimestral
 #https://www.alphavantage.co/query?function=EARNINGS&symbol=IBM&apikey=demo
 
-#Historico de tasa de cambio de dolar a peso colombiano cada 5 min
+#url para obtener Historico de tasa de cambio de dolar a peso colombiano cada 5 min
 #https://www.alphavantage.co/query?function=FX_INTRADAY&from_symbol=USD&to_symbol=COP&interval=5min&apikey=55A5SUC3FX5Y4F6N&datatype=csv&outputsize=full
 
-#informacion de lo empresa
+#url para obtener la informacion de la empresa
 #https://www.alphavantage.co/query?function=OVERVIEW&symbol=IBM&apikey=demo
+
+
 for emp in empresas:
     #consultamos informacion de la empresa
     reqEmp = requests.get('https://www.alphavantage.co/query?function=OVERVIEW&symbol='+emp+'&apikey='+apiKey)
@@ -63,3 +88,11 @@ with open('banlancesAnuales.json', 'w') as file:
 
 with open('historicos.json', 'w') as file:
     json.dump(historicos, file, indent=4)
+
+
+#Historico de tasa de cambio de dolar a peso colombiano cada 5 min
+reqcambio = requests.get('https://www.alphavantage.co/query?function=FX_INTRADAY&from_symbol=USD&to_symbol=COP&interval=5min&apikey=55A5SUC3FX5Y4F6N&datatype=csv&outputsize=full')
+reqStatus=reqcambio.status_code
+reqcambio.append(reqcambio.json())
+with open('cambio.json', 'w') as file:
+    json.dump(cambio, file, indent=4)
