@@ -1,7 +1,7 @@
 import requests
 import json
 #proyecto final de BUSINESS INTELLIGENCE BI
-#presetado por Juan Gabriel Carvajal - Jhon Alexander Cruz
+#presetado por Juan Gabriel Carvajal H - Jhon Alexander Cruz B.
 #Ingenieria de Sistemas y Computacion
 #Para el desarrollos del proyecto se consultara
 #la aplicacion Alpha Vantage
