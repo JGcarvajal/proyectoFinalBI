@@ -86,11 +86,11 @@ if reqStatus==200:
     cambioMoneda.append(reqcambio.json())
 
 #Borramos lso archivos para evitar mesclar los datos
-remove("detalleEmpresas.json")
-remove("gananciasAnuales.json")
-remove("banlancesAnuales.json")
-remove("historicos.json")
-remove("cambioMoneda.json")
+#remove("detalleEmpresas.json")
+#remove("gananciasAnuales.json")
+#remove("banlancesAnuales.json")
+#remove("historicos.json")
+#remove("cambioMoneda.json")
 
 with open('detalleEmpresas.json', 'w') as file:
     json.dump(detalleEmpresas, file, indent=4)
