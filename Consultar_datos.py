@@ -1,6 +1,8 @@
 import requests
 import json
 from os import remove
+import boto3
+
 #proyecto final de BUSINESS INTELLIGENCE BI
 #presetado por Juan Gabriel Carvajal H - Jhon Alexander Cruz B.
 #Ingenieria de Sistemas y Computacion
@@ -9,6 +11,8 @@ from os import remove
 
 #La apikey nos permite acceder ala aplicacion.
 #para obterner la informacion necesaria para el proyecto.
+
+#sudo apt-get install python3-boto3
 
 apiKey = "55A5SUC3FX5Y4F6N"
 
@@ -28,6 +32,9 @@ gananciasAnuales=[]
 banlancesAnuales=[]
 historicos=[]
 cambioMoneda=[]
+
+#Creamos el cliente de S3
+s3_client=boto3.client('s3')
 
 #URL para obtener la informacion de la plicacion
 #y porder manipular los datos son las siguientes.
@@ -85,6 +92,9 @@ reqStatus=reqcambio.status_code
 if reqStatus==200:
     cambioMoneda.append(reqcambio.json())
 
+#enviamos los archivos a S3
+s3_client.put_objet(Body=detalleEmpresas,Bucket='proyecto-final-bi-jgc-jac', Key='apy_alphavantage/detalle_empresas/detalleEmpresas.json' )
+
 #Borramos lso archivos para evitar mesclar los datos
 #remove("detalleEmpresas.json")
 #remove("gananciasAnuales.json")
@@ -92,17 +102,24 @@ if reqStatus==200:
 #remove("historicos.json")
 #remove("cambioMoneda.json")
 
-with open('detalleEmpresas.json', 'w') as file:
-    json.dump(detalleEmpresas, file, indent=4)
+#with open('detalleEmpresas.json', 'w') as file:
+    #json.dump(detalleEmpresas, file, indent=4)
 
-with open('gananciasAnuales.json', 'w') as file:
-    json.dump(gananciasAnuales, file, indent=4)
+#with open('gananciasAnuales.json', 'w') as file:
+    #json.dump(gananciasAnuales, file, indent=4)
 
-with open('banlancesAnuales.json', 'w') as file:
-    json.dump(banlancesAnuales, file, indent=4)
+#with open('banlancesAnuales.json', 'w') as file:
+   # json.dump(banlancesAnuales, file, indent=4)
 
-with open('historicos.json', 'w') as file:
-    json.dump(historicos, file, indent=4)
+#with open('historicos.json', 'w') as file:
+    #json.dump(historicos, file, indent=4)
 
-with open('cambioMoneda.json', 'w') as file:
-    json.dump(cambioMoneda, file, indent=4)
+#with open('cambioMoneda.json', 'w') as file:
+    #json.dump(cambioMoneda, file, indent=4)
+
+#import tinys3
+
+#conn = tinys3.Connection('S3_ACCESS_KEY','S3_SECRET_KEY',tls=True)
+
+#f = open('some_file.zip','rb')
+#conn.upload('some_file.zip',f,'my_bucket')
