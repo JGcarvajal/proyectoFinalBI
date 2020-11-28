@@ -1,5 +1,6 @@
 import requests
 import json
+from os import remove
 #proyecto final de BUSINESS INTELLIGENCE BI
 #presetado por Juan Gabriel Carvajal H - Jhon Alexander Cruz B.
 #Ingenieria de Sistemas y Computacion
@@ -16,7 +17,7 @@ apiKey = "55A5SUC3FX5Y4F6N"
 #estas 4 empresa IBM, EPM, ECOPETROL "EC", BANCOLOMBIA "CIB"
 
 #empresas=["IBM","EPM","EC","CIB"]
-empresas=["IBM","EC"]
+empresas=["EC"]
 
 #Al consultar en la aplicancion el endpoint Query se
 #extrae la informacion necesaria y se adiciona a los
@@ -79,10 +80,17 @@ for emp in empresas:
 
 
 #Historico de tasa de cambio de dolar a peso colombiano cada 5 min
-reqcambio = requests.get('https://www.alphavantage.co/query?function=FX_INTRADAY&from_symbol=USD&to_symbol=COP&interval=5min&apikey=55A5SUC3FX5Y4F6N&datatype=csv&outputsize=full')
+reqcambio = requests.get('https://www.alphavantage.co/query?function=FX_INTRADAY&from_symbol=USD&to_symbol=COP&interval=5min&apikey=55A5SUC3FX5Y4F6N&datatype=json&outputsize=full')
 reqStatus=reqcambio.status_code
-    if reqStatus==200:
-        cambioMoneda.append(reqcambio.json())
+if reqStatus==200:
+    cambioMoneda.append(reqcambio.json())
+
+#Borramos lso archivos para evitar mesclar los datos
+remove("detalleEmpresas.json")
+remove("gananciasAnuales.json")
+remove("banlancesAnuales.json")
+remove("historicos.json")
+remove("cambioMoneda.json")
 
 with open('detalleEmpresas.json', 'w') as file:
     json.dump(detalleEmpresas, file, indent=4)
@@ -96,6 +104,5 @@ with open('banlancesAnuales.json', 'w') as file:
 with open('historicos.json', 'w') as file:
     json.dump(historicos, file, indent=4)
 
-
-with open('cambio.json', 'w') as file:
-    json.dump(cambio, file, indent=4)
+with open('cambioMoneda.json', 'w') as file:
+    json.dump(cambioMoneda, file, indent=4)
