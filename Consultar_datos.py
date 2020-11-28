@@ -93,7 +93,7 @@ if reqStatus==200:
     cambioMoneda.append(reqcambio.json())
 
 #enviamos los archivos a S3
-s3_client.put_objet(Body=str(json.dumps(detalleEmpresas)),Bucket='proyecto-final-bi-jgc-jac', Key='apy_alphavantage/detalle_empresas/detalleEmpresas.json' )
+s3_client.put_object(Body=str(json.dumps(detalleEmpresas)),Bucket='proyecto-final-bi-jgc-jac', Key='apy_alphavantage/detalle_empresas/detalleEmpresas.json' )
 
 #Borramos lso archivos para evitar mesclar los datos
 #remove("detalleEmpresas.json")
