@@ -95,7 +95,7 @@ if reqStatus==200:
 #enviamos los archivos a S3
 #s3_client.put_object(Body=str(json.dumps(detalleEmpresas)),Bucket='proyecto-final-bi-jgc-jac', Key='detalleEmpresas.json' )
 s3 = boto3.resource('s3')
-s3object = s3.Object('your-bucket-name', 'your_file.json')
+s3object = s3.Object('proyecto-final-bi-jgc-jac', 'cambioMoneda.json')
 
 s3object.put(
     Body=(bytes(json.dumps(cambioMoneda).encode('UTF-8')))
