@@ -34,7 +34,8 @@ historicos=[]
 cambioMoneda=[]
 
 #Creamos el cliente de S3
-s3_client=boto3.client('s3',aws_access_key_id='AKIAZKHZZ4X2LRKJVJHB',aws_secret_access_key="")
+#s3_client=boto3.client('s3',aws_access_key_id='AKIAZKHZZ4X2LRKJVJHB',aws_secret_access_key="")
+s3_client=boto3.client('s3')
 
 #URL para obtener la informacion de la plicacion
 #y porder manipular los datos son las siguientes.
@@ -93,7 +94,7 @@ if reqStatus==200:
     cambioMoneda.append(reqcambio.json())
 
 #enviamos los archivos a S3
-s3_client.put_objet(Body=detalleEmpresas,Bucket='proyecto-final-bi-jgc-jac', Key='apy_alphavantage/detalle_empresas/detalleEmpresas.json' )
+s3_client.put_object(Body=detalleEmpresas,Bucket='proyecto-final-bi-jgc-jac', Key='apy_alphavantage/detalle_empresas/detalleEmpresas.json' )
 
 #Borramos lso archivos para evitar mesclar los datos
 #remove("detalleEmpresas.json")
