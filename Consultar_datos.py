@@ -34,7 +34,7 @@ historicos=[]
 cambioMoneda=[]
 
 #Creamos el cliente de S3
-s3_client=boto3.client('s3')
+s3_client=boto3.client('s3',aws_access_key_id='AKIAZKHZZ4X2LRKJVJHB',aws_secret_access_key="")
 
 #URL para obtener la informacion de la plicacion
 #y porder manipular los datos son las siguientes.
