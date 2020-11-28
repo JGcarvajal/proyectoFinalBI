@@ -26,7 +26,7 @@ detalleEmpresas=[]
 gananciasAnuales=[]
 banlancesAnuales=[]
 historicos=[]
-cambio=[]
+cambioMoneda=[]
 
 #URL para obtener la informacion de la plicacion
 #y porder manipular los datos son las siguientes.
@@ -77,6 +77,13 @@ for emp in empresas:
     if reqStatus==200:
         banlancesAnuales.append(reqbalances.json())
 
+
+#Historico de tasa de cambio de dolar a peso colombiano cada 5 min
+reqcambio = requests.get('https://www.alphavantage.co/query?function=FX_INTRADAY&from_symbol=USD&to_symbol=COP&interval=5min&apikey=55A5SUC3FX5Y4F6N&datatype=csv&outputsize=full')
+reqStatus=reqcambio.status_code
+    if reqStatus==200:
+        cambioMoneda.append(reqcambio.json())
+
 with open('detalleEmpresas.json', 'w') as file:
     json.dump(detalleEmpresas, file, indent=4)
 
@@ -90,9 +97,5 @@ with open('historicos.json', 'w') as file:
     json.dump(historicos, file, indent=4)
 
 
-#Historico de tasa de cambio de dolar a peso colombiano cada 5 min
-reqcambio = requests.get('https://www.alphavantage.co/query?function=FX_INTRADAY&from_symbol=USD&to_symbol=COP&interval=5min&apikey=55A5SUC3FX5Y4F6N&datatype=csv&outputsize=full')
-reqStatus=reqcambio.status_code
-reqcambio.append(reqcambio.json())
 with open('cambio.json', 'w') as file:
     json.dump(cambio, file, indent=4)
