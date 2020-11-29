@@ -36,7 +36,7 @@ historicos=[]
 cambioMoneda=[]
 
 #Creamos el cliente de S3
-s3_client=boto3.client('s3',aws_access_key_id='AKIAZKHZZ4X2FVILOE6L',aws_secret_access_key="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")
+s3_client=boto3.client('s3',aws_access_key_id='AKIAZKHZZ4X2L52SC2HL',aws_secret_access_key="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")
 
 #URL para obtener la informacion de la plicacion
 #y porder manipular los datos son las siguientes.
@@ -122,7 +122,7 @@ for i in range(5):
         Key='api/alphavantage/'+objetosJson[i]+'/'+objetosJson[i]+'-'+fecha+'.json'
     )
 
-
+print("Envio exitoso a S3")
 #with open('detalleEmpresas.json', 'w') as file:
     #json.dump(detalleEmpresas, file, indent=4)
 
