@@ -105,15 +105,15 @@ for i in range(5):
     print("i="+str(i))
     #'detalleEmpresas','gananciasAnuales','banlancesAnuales','historicos','cambioMoneda']
     #s3_client.put_object(Body=str(json.dumps(detalleEmpresas)),Bucket='proyecto-final-bi-jgc-jac', Key='detalleEmpresas.json' )
-    if i==1:
+    if i==0:
         json_object = detalleEmpresas
-    elif i== 2:
+    elif i== 1:
         json_object = gananciasAnuales
-    elif i== 3:
+    elif i== 2:
         json_object = banlancesAnuales
-    elif i== 4:
+    elif i== 3:
         json_object = historicos
-    elif i == 5:
+    elif i == 4:
         json_object = cambioMoneda
 
     s3_client.put_object(
