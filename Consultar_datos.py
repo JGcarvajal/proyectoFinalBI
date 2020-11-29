@@ -100,8 +100,9 @@ if reqStatus==200:
 
 #enviamos los archivos a S3
 fecha=datetime.now().strftime("%Y%m%d%S%M%S")
-
+json_object=[]
 for i in range(5):
+    print("i="+i)
     #'detalleEmpresas','gananciasAnuales','banlancesAnuales','historicos','cambioMoneda']
     #s3_client.put_object(Body=str(json.dumps(detalleEmpresas)),Bucket='proyecto-final-bi-jgc-jac', Key='detalleEmpresas.json' )
     if i==1:
