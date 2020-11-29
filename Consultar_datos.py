@@ -118,7 +118,7 @@ for i in range(5):
 
     s3_client.put_object(
         Body=str(json.dumps(json_object)),
-        Bucket='proyecto-final-bi-jgc-jac',
+        Bucket='proyecto-final-bi-jgc-jac-desarrollo',
         Key='api/alphavantage/'+objetosJson[i]+'/'+objetosJson[i]+'-'+fecha+'.json'
     )
 
