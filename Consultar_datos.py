@@ -2,6 +2,7 @@ import requests
 import json
 from os import remove
 import boto3
+from datetime import datetime
 
 #proyecto final de BUSINESS INTELLIGENCE BI
 #presetado por Juan Gabriel Carvajal H - Jhon Alexander Cruz B.
@@ -94,12 +95,12 @@ if reqStatus==200:
 
 #enviamos los archivos a S3
 #s3_client.put_object(Body=str(json.dumps(detalleEmpresas)),Bucket='proyecto-final-bi-jgc-jac', Key='detalleEmpresas.json' )
-
+fecha=datetime.now().strftime("%Y%m%d%S%M%S")
 json_object = cambioMoneda
 s3_client.put_object(
     Body=str(json.dumps(json_object)),
     Bucket='proyecto-final-bi-jgc-jac',
-    Key='api/cambioMoneda/cambioMoneda.json'
+    Key='api/alphavantage/cambioMoneda/cambioMoneda-'+fecha+'.json'
 )
 #Borramos lso archivos para evitar mesclar los datos
 #remove("detalleEmpresas.json")
