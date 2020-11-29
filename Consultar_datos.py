@@ -2,6 +2,7 @@ import requests
 import json
 from os import remove
 import boto3
+import time
 from datetime import datetime
 
 #proyecto final de BUSINESS INTELLIGENCE BI
@@ -21,9 +22,9 @@ apiKey = "55A5SUC3FX5Y4F6N"
 #la informacion de varias empresas en este caso se consultaran
 #estas 4 empresa IBM, EPM, ECOPETROL "EC", BANCOLOMBIA "CIB"
 
-#empresas=["IBM","EPM","EC","CIB"]
-empresas=["EC"]
-
+empresas=["IBM","EPM","EC","CIB"]
+#empresas=["EC"]
+objetosJson=['detalleEmpresas','gananciasAnuales','banlancesAnuales','historicos','cambioMoneda']
 #Al consultar en la aplicancion el endpoint Query se
 #extrae la informacion necesaria y se adiciona a los
 #documentos.
@@ -86,6 +87,10 @@ for emp in empresas:
     if reqStatus==200:
         banlancesAnuales.append(reqbalances.json())
 
+    #esperamos 60 segundos por restriccion del api
+    time.sleep(60)
+
+    print("Consultamos la empresa "+emp+ ", en 60 segundos consultamos la siguiente")
 
 #Historico de tasa de cambio de dolar a peso colombiano cada 5 min
 reqcambio = requests.get('https://www.alphavantage.co/query?function=FX_INTRADAY&from_symbol=USD&to_symbol=COP&interval=5min&apikey=55A5SUC3FX5Y4F6N&datatype=json&outputsize=full')
@@ -94,35 +99,31 @@ if reqStatus==200:
     cambioMoneda.append(reqcambio.json())
 
 #enviamos los archivos a S3
-#s3_client.put_object(Body=str(json.dumps(detalleEmpresas)),Bucket='proyecto-final-bi-jgc-jac', Key='detalleEmpresas.json' )
 fecha=datetime.now().strftime("%Y%m%d%S%M%S")
-json_object = cambioMoneda
-s3_client.put_object(
-    Body=str(json.dumps(json_object)),
-    Bucket='proyecto-final-bi-jgc-jac',
-    Key='api/alphavantage/cambioMoneda/cambioMoneda-'+fecha+'.json'
-)
-#Borramos lso archivos para evitar mesclar los datos
-#remove("detalleEmpresas.json")
-#remove("gananciasAnuales.json")
-#remove("banlancesAnuales.json")
-#remove("historicos.json")
-#remove("cambioMoneda.json")
+
+for i in range(5):
+    #'detalleEmpresas','gananciasAnuales','banlancesAnuales','historicos','cambioMoneda']
+    #s3_client.put_object(Body=str(json.dumps(detalleEmpresas)),Bucket='proyecto-final-bi-jgc-jac', Key='detalleEmpresas.json' )
+    if i==1:
+        json_object = detalleEmpresas
+    elif i== 2:
+        json_object = gananciasAnuales
+    elif i== 3:
+        json_object = banlancesAnuales
+    elif i== 4:
+        json_object = historicos
+    elif i == 5:
+        json_object = cambioMoneda
+
+    s3_client.put_object(
+        Body=str(json.dumps(json_object)),
+        Bucket='proyecto-final-bi-jgc-jac',
+        Key='api/alphavantage/'+objetosJson(i)+'/'+objetosJson(i)+'-'+fecha+'.json'
+    )
+
 
 #with open('detalleEmpresas.json', 'w') as file:
     #json.dump(detalleEmpresas, file, indent=4)
-
-#with open('gananciasAnuales.json', 'w') as file:
-    #json.dump(gananciasAnuales, file, indent=4)
-
-#with open('banlancesAnuales.json', 'w') as file:
-   # json.dump(banlancesAnuales, file, indent=4)
-
-#with open('historicos.json', 'w') as file:
-    #json.dump(historicos, file, indent=4)
-
-#with open('cambioMoneda.json', 'w') as file:
-    #json.dump(cambioMoneda, file, indent=4)
 
 #import tinys3
 
