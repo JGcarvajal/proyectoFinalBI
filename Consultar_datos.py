@@ -86,11 +86,12 @@ for emp in empresas:
 
     if reqStatus==200:
         banlancesAnuales.append(reqbalances.json())
-
+        
+    print("Consultamos la empresa "+emp+ ", en 60 segundos consultamos la siguiente")
     #esperamos 60 segundos por restriccion del api
     time.sleep(60)
 
-    print("Consultamos la empresa "+emp+ ", en 60 segundos consultamos la siguiente")
+
 
 #Historico de tasa de cambio de dolar a peso colombiano cada 5 min
 reqcambio = requests.get('https://www.alphavantage.co/query?function=FX_INTRADAY&from_symbol=USD&to_symbol=COP&interval=5min&apikey=55A5SUC3FX5Y4F6N&datatype=json&outputsize=full')
