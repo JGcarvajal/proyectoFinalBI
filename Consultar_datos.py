@@ -94,11 +94,12 @@ if reqStatus==200:
 
 #enviamos los archivos a S3
 #s3_client.put_object(Body=str(json.dumps(detalleEmpresas)),Bucket='proyecto-final-bi-jgc-jac', Key='detalleEmpresas.json' )
-s3 = boto3.resource('s3')
-s3object = s3.Object('proyecto-final-bi-jgc-jac', 'cambioMoneda.json')
-
-s3object.put(
-    Body=(bytes(json.dumps(cambioMoneda).encode('UTF-8')))
+s3 = boto3.client('s3')
+json_object = cambioMoneda
+s3.put_object(
+    Body=str(json.dumps(json_object)),
+    Bucket='proyecto-final-bi-jgc-jac',
+    Key='cambioMoneda.json'
 )
 #Borramos lso archivos para evitar mesclar los datos
 #remove("detalleEmpresas.json")
