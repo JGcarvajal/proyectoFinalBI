@@ -23,6 +23,7 @@ apiKey = "55A5SUC3FX5Y4F6N"
 #estas 4 empresa IBM, EPM, ECOPETROL "EC", BANCOLOMBIA "CIB"
 
 empresas=["IBM","EPM","EC","CIB"]
+
 #empresas=["EC"]
 objetosJson=['detalleEmpresas','gananciasAnuales','banlancesAnuales','historicos','cambioMoneda']
 #Al consultar en la aplicancion el endpoint Query se
@@ -86,7 +87,7 @@ for emp in empresas:
 
     if reqStatus==200:
         banlancesAnuales.append(reqbalances.json())
-        
+
     print("Consultamos la empresa "+emp+ ", en 60 segundos consultamos la siguiente")
     #esperamos 60 segundos por restriccion del api
     time.sleep(60)
